@@ -1,0 +1,38 @@
+# Remember: x forward, y stbd (right) wing, z down
+
+wing_left:
+  root_position: [0, 0, 0]
+  root_chord: 0.2
+  tip_chord: 0.15
+  span: 1.5
+  vector: [0, 1.0, 0]
+wing_right:
+  root_position: [0, 0, 0]
+  root_chord: 0.2
+  tip_chord: 0.15
+  span: 1.5
+  vector: [0, -1.0, 0]
+hstab_left:
+  root_position: [-0.8, 0, 0]
+  root_chord: 0.1
+  tip_chord: 0.1
+  span: 0.3
+  vector: [0, 1.0, 0]
+hstab_right:
+  root_position: [-0.8, 0, 0]
+  root_chord: 0.1
+  tip_chord: 0.1
+  span: 0.3
+  vector: [0, -1.0, 0]
+vstab:
+  root_position: [-0.8, 0, 0]
+  root_chord: 0.15
+  tip_chord: 0.1
+  span: 0.3
+  vector: [0, 0, -1.0]
+fuselage:
+  root_position: [-0.2, -0.05, 0]
+  root_chord: 1.2
+  tip_chord: 1.2
+  span: 0.1
+  vector: [0, 1.0, 0]
