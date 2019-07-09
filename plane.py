@@ -6,7 +6,7 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 import yaml
 
 class SurfacePolygon(object):
-    def __init__(self, root_position, root_chord, tip_chord, span, vector, *args, **kwargs):
+    def __init__(self, root_position, root_chord, tip_chord, span, vector, color='blue', *args, **kwargs):
         self._root_position = np.array(root_position)
 
         # Normalise vector
@@ -22,6 +22,8 @@ class SurfacePolygon(object):
         polygon += self._root_position
         self._base_polygon = polygon
         self._actuated_polygon = polygon.copy()
+
+        self._color = color
 
     def set_sweep(self, angle):
         self._actuated_polygon = np.matmul(Lz(angle), (self._base_polygon-self._root_position).T).T + self._root_position
@@ -62,6 +64,7 @@ class Plane(object):
 
     def plot(self, X=None, U=None):
         # X = [u, v, w, p, q, r, phi, theta, psi, x, y, z]
+        # U = [lamba_left, lambda_right, delta_rudder]
         if X is None:
             X = np.zeros(12)
         if U is not None:
@@ -70,6 +73,7 @@ class Plane(object):
 
         all_polygons = [poly.rotate_and_translate(X[6:9], X[9:12]) for poly in self._surface_polygons.values()]
         self._polygon_collection = Poly3DCollection(all_polygons)
+        self._polygon_collection.set_facecolor([poly._color for poly in self._surface_polygons.values()])
         self._axis.add_collection3d(self._polygon_collection, zs='z')
 
     def update(self, X, U=None):
@@ -102,4 +106,4 @@ if __name__ == "__main__":
     ax.set_ylabel(r'$Y_e$')
     ax.set_zlabel(r'$Z_e$')
 
-    plt.show(block=False)
+    plt.show()
