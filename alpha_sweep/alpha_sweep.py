@@ -179,27 +179,27 @@ def load_pressure_data(pressure_file):
     return pressure_data[:, 0], pressure_data[:, 1::2]
 
 
-# if __name__ == '__main__':
-plt.rc('text', usetex=True)
+if __name__ == '__main__':
+    plt.rc('text', usetex=True)
 
-parser = argparse.ArgumentParser(description='Plot some wing data')
-parser.add_argument('-p', '--pressure-file', required=True, help='CSV file containing pressure/alpha data')
-parser.add_argument('-w', '--wing-file', required=True, help='File containing wing coordinates (UIUC/XFOIL format)')
-parser.add_argument('-t', '--total-time', type=float, default=10.0, help='Duration of animation (s)')
-parser.add_argument('-f', '--frameskip', type=int, default=1, help='Frameskip (only plot every nth frame)')
-parser.add_argument('-s', '--save-video', default='', help="Save video to this file (default don't save)")
-args = parser.parse_args()
+    parser = argparse.ArgumentParser(description='Plot some wing data')
+    parser.add_argument('-p', '--pressure-file', required=True, help='CSV file containing pressure/alpha data')
+    parser.add_argument('-w', '--wing-file', required=True, help='File containing wing coordinates (UIUC/XFOIL format)')
+    parser.add_argument('-t', '--total-time', type=float, default=10.0, help='Duration of animation (s)')
+    parser.add_argument('-f', '--frameskip', type=int, default=1, help='Frameskip (only plot every nth frame)')
+    parser.add_argument('-s', '--save-video', default='', help="Save video to this file (default don't save)")
+    args = parser.parse_args()
 
-wing = WingTransformer(args.wing_file)
-alpha_data, pressure_data = load_pressure_data(args.pressure_file)
+    wing = WingTransformer(args.wing_file)
+    alpha_data, pressure_data = load_pressure_data(args.pressure_file)
 
-with plt.style.context('ggplot'):
+    with plt.style.context('ggplot'):
 
-    animator = AlphaSweepPlotter(alpha_data, pressure_data, wing, frameskip=args.frameskip, dp_offset=3)
+        animator = AlphaSweepPlotter(alpha_data, pressure_data, wing, frameskip=args.frameskip, dp_offset=3)
 
-    delta_t = (args.total_time * 1000.0 / animator.max_frames)
-    animation = FuncAnimation(animator.fh, animator.animate, init_func=animator.init, frames=animator.max_frames,
-                              interval=delta_t, blit=True)
-    if args.save_video:
-        animation.save(args.save_video, writer='ffmpeg', fps=int(1000.0/delta_t), extra_args=["-crf","10", "-profile:v", "main"])
+        delta_t = (args.total_time * 1000.0 / animator.max_frames)
+        animation = FuncAnimation(animator.fh, animator.animate, init_func=animator.init, frames=animator.max_frames,
+                                  interval=delta_t, blit=True)
+        if args.save_video:
+            animation.save(args.save_video, writer='ffmpeg', fps=int(1000.0/delta_t), extra_args=["-crf","10", "-profile:v", "main"])
     plt.show()
