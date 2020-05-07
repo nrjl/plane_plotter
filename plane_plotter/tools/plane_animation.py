@@ -1,16 +1,16 @@
 import numpy as np
-from plane import Plane
+from tools.plane import Plane
 
 class PlaneAnimation(object):
     path_line = None
 
-    def __init__(self, ax, X, U=None, keep_centred=False, box_radius=5.0):
+    def __init__(self, ax, X, U=None, keep_centred=False, box_radius=5.0, model='models/default_plane.yaml'):
         self.ax = ax
         self.X = X
         if U is None:
             U = np.zeros((X.shape[0], 3))
         self.U = U
-        self.plane = Plane(self.ax, 'models/default_plane.yaml')
+        self.plane = Plane(self.ax, model)
         self.keep_centred = keep_centred
         self.box_radius = box_radius
 
@@ -46,11 +46,10 @@ class PlaneAnimation(object):
         self.ax.invert_zaxis()
         self.ax.invert_yaxis()
 
-
     def first_frame(self):
         self.plane.update(self.X[0], self.U[0])
         if self.path_line is None:
-            self.path_line, = self.ax.plot([self.X[0,9]], [self.X[0,10]], [self.X[0,11]], color='firebrick')
+            self.path_line, = self.ax.plot(self.X[:1, 9], self.X[:1, 10], self.X[:1, 11], color='firebrick')
         if self.keep_centred:
             self.centre_frame(0)
         else:
@@ -58,8 +57,8 @@ class PlaneAnimation(object):
 
     def animate(self, i):
         self.plane.update(self.X[i], self.U[i])
-        self.path_line.set_data(self.X[:i, 9:11].T)
-        self.path_line.set_3d_properties(self.X[:i, 11])
+        self.path_line.set_data(self.X[:i+1, 9:11].T)
+        self.path_line.set_3d_properties(self.X[:i+1, 11])
         if self.keep_centred:
             self.centre_frame(i)
 

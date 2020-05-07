@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.animation as animation
-from plane_animation import PlaneAnimation
+from tools.plane_animation import PlaneAnimation
 
 save_vid = False
 

@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.animation as animation
-from plane_animation import PlaneAnimation
+from tools.plane_animation import PlaneAnimation
 
 # Set some text properties for nice labels
 plt.rc('font', **{'family': 'serif', 'sans-serif': ['Computer Modern Roman']})

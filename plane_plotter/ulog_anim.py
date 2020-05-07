@@ -4,7 +4,7 @@ import argparse
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.animation as animation
-from plane_animation import PlaneAnimation
+from tools.plane_animation import PlaneAnimation
 
 def quaternion_rotation_matrix(q):
     qr, qi, qj, qk = q[0], q[1], q[2], q[3]
