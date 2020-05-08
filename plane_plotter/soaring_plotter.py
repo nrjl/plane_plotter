@@ -21,7 +21,7 @@ args = parser.parse_args()
 state_data = np.load(args.data_file)
 
 observations = state_data['obs'][:args.max_steps, :]
-actions = state_data['actions'][:args.max_steps, :]*30*np.pi/180
+actions = state_data['actions'][:args.max_steps, :]
 print('Loaded data file {0}, using {1} steps ({2:0.2f} sec)'.format(
     args.data_file, actions.shape[0], actions.shape[0]*args.dt))
 
